@@ -3,6 +3,8 @@ package kz.BekAidar.Library.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
@@ -21,4 +23,8 @@ public class User {
 
     @Column(name = "age")
     private int age;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Library> libraries;
+
 }

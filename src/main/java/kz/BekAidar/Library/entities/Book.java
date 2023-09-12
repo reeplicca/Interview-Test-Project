@@ -18,4 +18,7 @@ public class Book {
 
     @Column(name = "name")
     private String name;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Library library;
 }

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Transactional
 public interface LibraryRepository extends JpaRepository<Library,Long> {
+    Library findAllById(Long id);
 }

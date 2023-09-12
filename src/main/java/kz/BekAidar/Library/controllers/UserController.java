@@ -8,7 +8,7 @@ import kz.BekAidar.Library.services.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/user")
 public class UserController {
     @Autowired
     private UserService userService;
