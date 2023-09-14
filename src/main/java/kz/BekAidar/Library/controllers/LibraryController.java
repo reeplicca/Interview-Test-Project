@@ -4,7 +4,7 @@ import kz.BekAidar.Library.entities.Library;
 import kz.BekAidar.Library.services.LibraryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +16,10 @@ import java.util.List;
 public class LibraryController {
     Logger logger = LoggerFactory.getLogger(LibraryController.class);
 
-    private  final RabbitTemplate template;
+    private  final AmqpTemplate template;
 
     @Autowired
-    public LibraryController(RabbitTemplate template) {
+    public LibraryController(AmqpTemplate template) {
         this.template = template;
     }
 
@@ -29,8 +29,7 @@ public class LibraryController {
     @PostMapping()
     public ResponseEntity<String> addLibrary(@RequestBody Library library) {
         logger.info("Emit to myQueue");
-        template.setExchange("add-library");
-        template.convertAndSend(library);
+        template.convertAndSend("myQueueLibrary",library);
         return ResponseEntity.ok("Success emit to queue");
     }
 

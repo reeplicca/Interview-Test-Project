@@ -29,19 +29,19 @@ public class RabbitMQListener {
     Logger logger = LoggerFactory.getLogger(RabbitMQListener.class);
 
     @RabbitListener(queues = "myQueueUser")
-    public void processMyQueue(User user) {
+    public void processMyQueueUser(User user) {
         userService.addUser(user);
         logger.info("Received first form myQueue: {}", "Add User");
     }
 
     @RabbitListener(queues = "myQueueBook")
-    public void processMyQueueSecond(Book book) {
+    public void processMyQueueBook(Book book) {
         bookService.addBook(book);
         logger.info("Received second form myQueue: {}", "Add Book");
     }
 
     @RabbitListener(queues = "myQueueLibrary")
-    public void processMyQueueThird(Library library) {
+    public void processMyQueueLibrary(Library library) {
         libraryService.addLibrary(library);
         logger.info("Received third form myQueue: {}", "Add Library");
     }

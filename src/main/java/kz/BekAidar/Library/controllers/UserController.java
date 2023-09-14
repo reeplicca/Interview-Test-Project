@@ -1,10 +1,9 @@
 package kz.BekAidar.Library.controllers;
 
 import kz.BekAidar.Library.entities.User;
-import kz.BekAidar.Library.services.LibraryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +17,10 @@ public class UserController {
 
     Logger logger = LoggerFactory.getLogger(LibraryController.class);
 
-    private  final RabbitTemplate template;
+    private  final AmqpTemplate template;
 
     @Autowired
-    public UserController(RabbitTemplate template) {
+    public UserController(AmqpTemplate template) {
         this.template = template;
     }
 
@@ -31,8 +30,7 @@ public class UserController {
     @PostMapping()
     public ResponseEntity<String> addUser(@RequestBody User user) {
         logger.info("Emit to myQueue");
-        template.setExchange("add-user");
-        template.convertAndSend(user);
+        template.convertAndSend("myQueueUser",user);
         return ResponseEntity.ok("Success emit to queue");
     }
 
